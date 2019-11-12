@@ -1,0 +1,21 @@
+{
+  "name": "cpanuxtdocker",
+  "version": "1.0.0",
+  "description": "CPA Front-end",
+  "author": "Bruno de Araujo Alves &lt;devbaraus&gt;",
+  "private": true,
+  "scripts": {
+    "dev": "nuxt",
+    "build": "nuxt build",
+    "start": "nuxt start",
+    "generate": "nuxt generate"
+  },
+  "dependencies": {
+    "@nuxtjs/axios": "^5.3.6",
+    "apexcharts": "^3.10.1",
+    "nuxt": "^2.0.0",
+    "vue-apexcharts": "^1.5.1",
+    "vue": "latest"
+  },
+  "devDependencies": {}
+}
