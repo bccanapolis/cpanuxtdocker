@@ -150,7 +150,7 @@
             fetchAtuacao() {
                 this.selectedAtuacao = 0;
                 this.$axios.get(`/atuacao?pergunta=${this.selectedGrafico}&campus=${this.selectedCampus}${this.selectedSegmento != 0 ? '&segmento=' + this.selectedSegmento : ''}`).then(res => {
-                    this.listGrafico = res.data.atuacao;
+                    this.listAtuacao = res.data.atuacao;
                 })
             },
             fetchLotacao() {

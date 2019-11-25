@@ -1,37 +1,78 @@
 <template>
-  <div>
-    <card>
-      <slot>
-          <div class="d-block mx-auto">
-            <img style="display: block; margin-left:auto; margin-right: auto; max-width: 80vw; max-height:100vh;"
-                 src="img/comissao2019.png" title="Comissão Própria de Avaliação 2019"
-                 alt="Banner Comissão Própria de Avaliação 2019">
-          </div>
-          <div style="margin-top: 2em;" class="mt-10">
-            <div class="col-sm-offset-1 col-sm-10 row">
-              <div class="col-sm-6 col-md-3"><a class="lead" href="/s4UkHMQC">Estudante</a></div>
-              <div class="col-sm-6 col-md-3"><a class="lead" href="/zc3WsGum">Docente</a></div>
-              <div class="col-sm-6 col-md-3"><a class="lead" href="/g3YTAfpT">Técnico Administrativo (câmpus)</a></div>
-              <div class="col-sm-6 col-md-3"><a class="lead" href="/4jn7qduk">Técnico Administrativo (reitoria)</a>
-              </div>
-            </div>
-          </div>
-      </slot>
-    </card>
-  </div>
+  <card>
+    <template v-slot:content>
+      <filterchart @change="updateChart" @normal="(val) => { this.normalChart = val }" @total="(val) => { this.totalChart = val }"
+                   @fetch="filterLoad = true"></filterchart>
+      <hr>
+      <div v-if="filterLoad">
+        <div v-if="queryChart.pergunta != 0 && indicatorChart" class="chart-options">
+          <p class="lead small text-uppercase">Indicador</p>
+          <h3 id="chart-indicator" class="lead" :style="`background-color:${indicatorChart.cor}`">{{indicatorChart.label}} - {{indicatorChart.valor}}%</h3>
+          <hr>
+        </div>
 
+        <chart :query="queryChart" :normalize="normalChart" :totalize="totalChart" @fetch="chartData"></chart>
+        <hr>
+        <div class="row">
+          <div class="col-sm-12">
+<tablechart :fields="queryChart" :pie="queryChart.pergunta == 0" :query="tableChart"></tablechart>
+          </div>
+        </div>
+        
+      </div>
+    </template>
+    <template v-slot:footer>
+      <div class="stats">
+        Dados relacionados a avaliazação de 2019, com participação de {{ part_pessoas }} pessoas.
+      </div>
+    </template>
 
+  </card>
 </template>
 
 <script>
     import card from "../components/card";
+    import filterchart from "../components/filterchart";
+    import chart from "../components/chart/chart";
+    import tablechart from "../components/tablechart/tablechart";
 
     export default {
-        components: {
-            card
+        name: "grafico",
+        components: {card, filterchart, chart, tablechart},
+        data: () => ({
+            filterLoad: false,
+            queryChart: {pergunta: 0, campus:0, segmento: 0},
+            normalChart: false,
+            totalChart: false,
+            indicatorChart: {},
+            tableChart: [],
+            part_pessoas: 0
+        }),
+        methods: {
+            updateChart(val) {
+                this.queryChart = val
+            },
+            chartData(val){
+                this.indicatorChart = val.indicador;
+                this.tableChart = val.data;
+            },
+            fetchInfo(){
+                this.$axios.get('/info').then(res => {
+                    this.part_pessoas = res.data.pessoas
+                })
+            }
+        },
+        mounted(){
+            this.fetchInfo()
         }
     }
 </script>
 
-<style>
+<style scoped>
+  #chart-indicator{
+    text-align: center;
+    line-height: 3em;
+    border-radius: 5px;
+    color: #fff;
+  }
 </style>

@@ -37,10 +37,22 @@
             loaded: false,
             series: [],
             chartOptions: {
+                sparkline: {
+                    enabled: true
+                },
                 labels: [],
                 legend: {
                     position: "right"
                 },
+                responsive: [{
+                    breakpoint: 780,
+                    options: {
+                        legend: {
+                            position: 'bottom'
+                        },
+                        height: '800px'
+                    }
+                }],
                 dataLabels: {
                     enabled: true,
                     formatter: function (val) {

@@ -1,20 +1,28 @@
 <template>
   <div class="card">
-    <div class="card-head">
-      <h4 class="card-title">{{cardtitle}}</h4>
+    <div class="header">
+      <slot name="header">
+
+      </slot>
     </div>
-    <div class="card-body">
-      <div>
-        <slot></slot>
+    <div class="content">
+      <slot name="content">
+
+      </slot>
+      <div class="footer">
+        <slot name="footer">
+
+        </slot>
       </div>
     </div>
+
   </div>
 </template>
 
 <script>
     export default {
         name: "card",
-        props: ['cardtitle']
+        props: ['cardtitle', 'cardfooter'],
     }
 </script>
 

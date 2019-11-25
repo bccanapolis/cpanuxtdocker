@@ -1,0 +1,22 @@
+version: "3"
+
+services:
+
+  nuxt:
+    build: .
+    container_name: cpa-front
+    restart: always
+    ports:
+      - "6000:6000"
+    expose:
+      - "6000"
+    command:
+      "npm run start"
+    environment:
+      VIRTUAL_HOST: vuecpa.bcc.anapolis.ifg.edu.br
+      VIRTUAL_PORT: 6000
+
+networks:
+  default:
+    external:
+      name: nginx-proxy
