@@ -1,7 +1,7 @@
 <template>
   <card>
     <template v-slot:content>
-      <filterchart @change="updateChart" @normal="(val) => { this.normalChart = val }" @total="(val) => { this.totalChart = val }"
+      <filterchart @change="updateChart" @normal="changeNormal" @total="changeTotal"
                    @fetch="filterLoad = true"></filterchart>
       <hr>
       <div v-if="filterLoad">
@@ -18,7 +18,7 @@
 <tablechart :fields="queryChart" :pie="queryChart.pergunta == 0" :query="tableChart"></tablechart>
           </div>
         </div>
-        
+
       </div>
     </template>
     <template v-slot:footer>
@@ -49,6 +49,12 @@
             part_pessoas: 0
         }),
         methods: {
+            changeNormal(val){
+                this.normalChart = val;
+            },
+            changeTotal(val){
+                this.totalChart = val;
+            },
             updateChart(val) {
                 this.queryChart = val
             },
