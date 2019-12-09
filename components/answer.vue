@@ -20,10 +20,12 @@
             </div>
             <div class="col-md-6">
               <div class="form-group">
-                <label for="campusList">Campus</label>
-                <select class="form-control" name="campus" id="campusList">
+                <label for="inputCampusList">Campus</label>
+                <select class="form-control" name="campus" id="inputCampusList">
+                  <option value="0" selected>Selecione um campus</option>
                   <option v-for="cp in campus" :value="cp.id">{{cp.nome}}</option>
                 </select>
+
               </div>
             </div>
             <div class="col-md-6">
@@ -33,9 +35,9 @@
                   <span v-else-if="titulo === 'Docente'">Atuação</span>
                   <span v-else>Lotação</span>
                 </label>
-                <select v-model="selectedArea" name="" id="areaList" class="form-control">
+                <datalist v-model="selectedArea" name="" id="areaList" class="form-control">
                   <option v-for="ae in areas" :value="ae.id">{{ae.nome}}</option>
-                </select>
+                </datalist>
               </div>
             </div>
           </div>

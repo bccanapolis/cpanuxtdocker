@@ -13,7 +13,7 @@ services:
     command:
       "npm run start"
     environment:
-      VIRTUAL_HOST: vuecpa.bcc.anapolis.ifg.edu.br
+      VIRTUAL_HOST: cpa.bcc.anapolis.ifg.edu.br
       VIRTUAL_PORT: 6000
 
 networks:

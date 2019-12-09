@@ -4,7 +4,7 @@ export default {
   ** Headers of the page
   */
   head: {
-    title: process.env.npm_package_name || '',
+    title: 'Comissão Própria de Avaliação',
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1'},
@@ -56,7 +56,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'http://cpa.bcc.anapolis.ifg.edu.br/api'
+    baseURL: 'http://api.cpa.bcc.anapolis.ifg.edu.br/api'
     // baseURL: 'http://localhost:8000/api'
   },
   /*
