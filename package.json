@@ -14,8 +14,7 @@
     "@nuxtjs/axios": "^5.3.6",
     "apexcharts": "^3.10.1",
     "nuxt": "^2.0.0",
-    "vue-apexcharts": "^1.5.1",
-    "vue": "latest"
+    "vue-apexcharts": "^1.5.1"
   },
   "devDependencies": {}
 }

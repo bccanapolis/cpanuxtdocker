@@ -64,15 +64,10 @@
             chartData(val) {
                 this.indicatorChart = val.indicador;
                 this.tableChart = val.data;
+                this.part_pessoas = val.total
             },
-            fetchInfo() {
-                this.$axios.get('/info').then(res => {
-                    this.part_pessoas = res.data.pessoas
-                })
-            }
         },
         mounted() {
-            this.fetchInfo()
         }
     }
 </script>
