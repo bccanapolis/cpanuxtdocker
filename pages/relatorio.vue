@@ -40,7 +40,7 @@
     import tablechart from "../components/tablechart/tablechart";
 
     export default {
-        name: "grafico",
+        name: "relatorio",
         components: {card, filterchart, chart, tablechart},
         data: () => ({
             filterLoad: false,
