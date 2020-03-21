@@ -1,9 +1,20 @@
 export default {
-  mode: 'universal',
+  mode: 'spa',
+  // generate: {
+  //   routes: [
+  //     'questionario/s4UkHMQC',
+  //     'questionario/zc3WsGum',
+  //     'questionario/4jn7qduk',
+  //     'questionario/g3YTAfpT',
+  //   ]
+  // },
   /*
   ** Headers of the page
   */
   head: {
+    htmlAttrs: {
+      lang: 'pt-br',
+    },
     title: 'Comissão Própria de Avaliação',
     meta: [
       {charset: 'utf-8'},
@@ -12,18 +23,18 @@ export default {
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},
-      {rel: 'stylesheet', href: 'css/bootstrap.min.css'},
-      {rel: 'stylesheet', href: 'css/animate.min.css'},
-      {rel: 'stylesheet', href: 'css/light-bootstrap-dashboard.css?v=1.4.0'},
+      {rel: 'stylesheet', href: '/css/bootstrap.min.css'},
+      {rel: 'stylesheet', href: '/css/animate.min.css'},
+      {rel: 'stylesheet', href: '/css/light-bootstrap-dashboard.css?v=1.4.0'},
       {rel: 'stylesheet', href: 'http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'},
       {rel: 'stylesheet', href: 'http://fonts.googleapis.com/css?family=Roboto:400,700,300'},
-      {rel: 'stylesheet', href: 'css/pe-icon-7-stroke.css'},
+      {rel: 'stylesheet', href: '/css/pe-icon-7-stroke.css'},
     ],
     script: [
-      {src:'js/jquery.3.2.1.min.js', type: 'text/javascript'},
-      {src:'js/bootstrap.min.js', type: 'text/javascript'},
-      {src:'js/bootstrap-notify.js', type: 'text/javascript'},
-      {src:'js/light-bootstrap-dashboard.js?v=1.4.0', type: 'text/javascript'},
+      {src: '/js/jquery.3.2.1.min.js', type: 'text/javascript'},
+      {src: '/js/bootstrap.min.js', type: 'text/javascript'},
+      {src: '/js/bootstrap-notify.js', type: 'text/javascript'},
+      {src: '/js/light-bootstrap-dashboard.js?v=1.4.0', type: 'text/javascript'},
     ]
   },
   /*
@@ -38,7 +49,9 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    { src: '~plugins/apexcharts-plugin.js', ssr: false }
+    {src: '~plugins/apexcharts-plugin.js', mode: 'client' },
+    { src: '~/plugins/vue-flash-message.js', mode: 'client' }
+    // {src: '~plugins/vuelidate'}
   ],
   /*
   ** Nuxt.js dev-modules
@@ -57,7 +70,7 @@ export default {
   */
   axios: {
     baseURL: 'http://api.cpa.bcc.anapolis.ifg.edu.br/api'
-    // baseURL: 'http://localhost:8000/api'
+    // baseURL: 'http://localhost:8000/v1'
   },
   /*
   ** Build configuration

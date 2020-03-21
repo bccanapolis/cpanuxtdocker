@@ -28,20 +28,25 @@
 </template>
 
 <script>
-    export default {
-        name: "navbar",
-        props: {
-            sidebar: {
-                type: Boolean,
-                default: false
-            }
-        },
-        data: () => ({
-            links: [
-                {label: 'Home', icon: 'pe-7s-home', link: '/'}
-            ]
-        })
-    }
+  export default {
+    name: "navbar",
+    props: {
+      sidebar: {
+        type: Boolean,
+        default: false
+      }
+    },
+    data: () => ({
+      links: [
+        {label: 'Home', icon: 'pe-7s-home', link: '/'},
+        {label: 'Gráficos', icon: 'pe-7s-graph', link: '/graficos'}
+        // {label: 'Estudante', icon: 'pe-7s-home', link: '/questionario/s4UkHMQC'},
+        // {label: 'Docente', icon: 'pe-7s-home', link: '/questionario/zc3WsGum'},
+        // {label: 'Câmpus', icon: 'pe-7s-home', link: '/questionario/g3YTAfpT'},
+        // {label: 'Reitoria', icon: 'pe-7s-home', link: '/questionario/4jn7qduk'},
+      ]
+    })
+  }
 </script>
 
 <style scoped>
