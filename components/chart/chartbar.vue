@@ -174,7 +174,7 @@
         let reqAtuacao = typeof this.query.atuacao != 'undefined' && this.query.atuacao != null && this.query.atuacao != 0 ? `&atuacao=${this.query.atuacao}` : ''
         let reqLotacao = typeof this.query.lotacao != 'undefined' && this.query.lotacao != null && this.query.lotacao != 0 ? `&lotacao=${this.query.lotacao}` : ''
         let reqSegmento = typeof this.query.segmento != 'undefined' && this.query.segmento != null && this.query.segmento != 0 ? `&segmento=${this.query.segmento}` : ''
-        return this.$axios.get(`/grafico?pergunta=${this.query.pergunta}${reqSegmento}${reqAtuacao}${reqLotacao}${reqCampus}${reqCurso}`)
+        return this.$axios.get(`/grafico?pergunta=${this.query.pergunta}&ano=${this.query.ano}${reqSegmento}${reqAtuacao}${reqLotacao}${reqCampus}${reqCurso}`)
           .then(result => {
             this.rawRoles = result.data.roles;
             this.chartOptions.xaxis.categories = result.data.roles;

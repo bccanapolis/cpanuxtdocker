@@ -39,11 +39,11 @@
     data: () => ({
       links: [
         {label: 'Home', icon: 'pe-7s-home', link: '/'},
-        {label: 'Relatório', icon: 'pe-7s-graph', link: '/relatorio'}
-        // {label: 'Estudante', icon: 'pe-7s-home', link: '/questionario/s4UkHMQC'},
-        // {label: 'Docente', icon: 'pe-7s-home', link: '/questionario/zc3WsGum'},
-        // {label: 'Câmpus', icon: 'pe-7s-home', link: '/questionario/g3YTAfpT'},
-        // {label: 'Reitoria', icon: 'pe-7s-home', link: '/questionario/4jn7qduk'},
+        {label: 'Relatório', icon: 'pe-7s-graph', link: '/relatorio'},
+        {label: 'Estudante', icon: 'pe-7s-home', link: '/questionario/s4UkHMQC'},
+        {label: 'Docente', icon: 'pe-7s-home', link: '/questionario/zc3WsGum'},
+        {label: 'Câmpus', icon: 'pe-7s-home', link: '/questionario/g3YTAfpT'},
+        {label: 'Reitoria', icon: 'pe-7s-home', link: '/questionario/4jn7qduk'},
       ]
     })
   }

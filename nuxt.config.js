@@ -1,13 +1,13 @@
 export default {
   mode: 'spa',
-  // generate: {
-  //   routes: [
-  //     'questionario/s4UkHMQC',
-  //     'questionario/zc3WsGum',
-  //     'questionario/4jn7qduk',
-  //     'questionario/g3YTAfpT',
-  //   ]
-  // },
+  generate: {
+    routes: [
+      'questionario/s4UkHMQC',
+      'questionario/zc3WsGum',
+      'questionario/4jn7qduk',
+      'questionario/g3YTAfpT',
+    ]
+  },
   /*
   ** Headers of the page
   */
@@ -73,8 +73,8 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'http://api.cpa.bcc.anapolis.ifg.edu.br/api'
-    // baseURL: 'http://localhost:8000/v1'
+    // baseURL: 'http://api.cpa.bcc.anapolis.ifg.edu.br/api'
+    baseURL: 'http://localhost:8000/v1'
   },
   /*
   ** Build configuration

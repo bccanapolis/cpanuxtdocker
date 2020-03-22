@@ -112,7 +112,7 @@
       async fetchData() {
         let reqCampus = typeof this.query.campus != 'undefined' && this.query.campus != null && this.query.campus != 0 ? `&campus=${this.query.campus}` : ''
         let reqSegmento = typeof this.query.segmento != 'undefined' && this.query.segmento != null && this.query.segmento != 0 ? `&segmento=${this.query.segmento}` : ''
-        return this.$axios.get(`/grafico?pergunta=${this.query.pergunta}${reqSegmento}${reqCampus}`)
+        return this.$axios.get(`/grafico?pergunta=${this.query.pergunta}&ano=${this.query.ano}${reqSegmento}${reqCampus}`)
           .then(result => {
             this.labels = result.data.roles;
             this.series = this.sanitizeData(result.data.data);
