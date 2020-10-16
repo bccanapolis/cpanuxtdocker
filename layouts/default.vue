@@ -5,7 +5,7 @@
       <div class="sidebar-wrapper">
         <div class="logo">
           <div>
-            <nuxt-link tag="img" to="/" style="height: 180px; margin-right: auto; margin-left: auto; display: block;"
+            <nuxt-link tag="img" to="/" style="height: 120px; margin-right: auto; margin-left: auto; display: block;"
                        class="mx-auto d-block" src="/img/ifg-logo.png"
                        alt="Logo Instituto Federal de Goiás">
             </nuxt-link>
@@ -20,8 +20,8 @@
         </div>
 
         <navbar></navbar>
-        <a style="position: absolute; bottom: 5px; padding: 10px; margin-top: 30px;" href="http://computacaoifg.com.br"><img
-          width="240" src="/img/ciencia-computacao-pequeno.png"
+        <a style="width: 100%; text-align: center; position: absolute; bottom: 5px; padding: 10px; margin-top: 30px;" href="http://computacaoifg.com.br"><img
+          width="200" src="/img/ciencia-computacao-pequeno.png"
           alt="Logo Curso de Ciência da Computação - IFG Campus Anápolis"></a>
       </div>
     </div>
