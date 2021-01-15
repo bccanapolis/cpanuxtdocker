@@ -19,5 +19,7 @@
     "vee-validate": "^3.2.5",
     "vue-apexcharts": "^1.5.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@nuxt/types": "~0.5.0"
+  }
 }

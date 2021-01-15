@@ -3,7 +3,7 @@
     <form @submit.prevent="postForm">
       <card>
         <template v-slot:header>
-          <h2 class="mx-auto text-center">{{fetched.segmento.nome}}</h2>
+          <h2 class="mx-auto text-center">{{ fetched.segmento.nome }}</h2>
           <p>Prezado(a) participante, seja bem-vindo(a) ao QUESTIONÁRIO DE AUTOAVALIAÇÃO INSTITUCIONAL do
             IFG. Este questionário é anônimo e visa a obter avaliações referentes às atividades
             realizadas pelo IFG no ano de 2019. As questões abordam de forma concisa e objetiva os
@@ -32,7 +32,7 @@
                   v-model="campus"
                 >
                   <option value="" disabled selected>Selecione seu campus</option>
-                  <option v-for="it in fetched.campus" :value="it.id">{{it.nome}}</option>
+                  <option v-for="it in fetched.campus" :value="it.id">{{ it.nome }}</option>
                 </select>
               </div>
             </div>
@@ -50,7 +50,7 @@
                   oninput="this.setCustomValidity('')"
                 >
                   <option value="" disabled selected>Selecione seu curso</option>
-                  <option v-for="it in fetched.cursos" :value="it.id">{{it.nome}}</option>
+                  <option v-for="it in fetched.cursos" :value="it.id">{{ it.nome }}</option>
                 </select>
               </div>
             </div>
@@ -68,7 +68,7 @@
                   oninput="this.setCustomValidity('')"
                 >
                   <option value="" disabled selected>Selecione sua lotação</option>
-                  <option v-for="it in fetched.lotacao" :value="it.id">{{it.nome}}</option>
+                  <option v-for="it in fetched.lotacao" :value="it.id">{{ it.nome }}</option>
                 </select>
               </div>
             </div>
@@ -86,7 +86,7 @@
                   oninput="this.setCustomValidity('')"
                 >
                   <option value="" disabled selected>Selecione sua atuação</option>
-                  <option v-for="it in fetched.atuacao" :value="it.id">{{it.nome}}</option>
+                  <option v-for="it in fetched.atuacao" :value="it.id">{{ it.nome }}</option>
                 </select>
               </div>
             </div>
@@ -128,7 +128,7 @@
                           rows="3"></textarea>
               </div>
             </div>
-            <input class="btn btn-info btn-fill pull-right" type="submit" value="Envia">
+            <input class="btn btn-info btn-fill pull-right" style="margin-right: 1rem;" type="submit" value="Envia">
             <div class="clearfix"></div>
           </div>
         </template>
@@ -138,108 +138,111 @@
 </template>
 
 <script>
-  import Card from "../../components/card";
-  import {EventBus} from "../../eventbus";
+import Card from "../../components/card";
+import {EventBus} from "../../eventbus";
 
-  export default {
-    name: "slug",
-    components: {Card},
-    computed: {
-      skey() {
-        return this.$route.params.slug
-      }
-    },
-    data: () => ({
-      fetched: {
-        segmento: {id: 0, nome: null},
-        perguntas: [],
-        objetivas: [],
-        campus: [],
-        cursos: [],
-        lotacao: [],
-        atuacao: [],
-      },
-      curso: "",
-      lotacao: "",
-      campus: "",
-      atuacao: "",
-      answers: {},
-    }),
-    beforeMount() {
-      if (this.skey != '4jn7qduk') {
-        this.fetchCampus()
-      }
-      this.fetchPergutas()
-    },
-    methods: {
-      fetchPergutas() {
-        this.$axios.get(`pergunta?skey=${this.skey}`).then(res => {
-          const {segmento, perguntas, resp_objetivas} = res.data
-          this.fetched.segmento = segmento
-          this.fetched.perguntas = perguntas
-          this.fetched.objetivas = resp_objetivas
-        })
-      },
-      fetchCampus() {
-        return this.$axios.get('campus').then(res => {
-          this.fetched.campus = res.data.campus;
-        })
-      },
-      fetchCurso() {
-        this.$axios.get(`curso?campus=${this.campus}`).then(res => {
-          this.fetched.cursos = res.data.cursos;
-          this.curso = ''
-        })
-      },
-      fetchLotacao() {
-        this.$axios.get(`lotacao?campus=${this.campus}`).then(res => {
-          this.fetched.lotacao = res.data.lotacao;
-          this.lotacao = ''
-        })
-
-      },
-      fetchAtuacao() {
-        this.$axios.get(`atuacao?campus=${this.campus}`).then(res => {
-          this.fetched.atuacao = res.data.atuacao;
-          this.atuacao = ''
-        })
-      },
-      changedCampus() {
-        this.fetchCurso()
-        this.fetchAtuacao()
-        this.fetchLotacao()
-      },
-      postForm($e) {
-        this.segmento = this.fetched.segmento.id
-        if (this.skey === '4jn7qduk') {
-          this.campus = 15
-        }
-        this.$axios({
-          method: 'post',
-          url: 'pergunta',
-          data: {
-            segmento: this.fetched.segmento.id,
-            campus: this.campus,
-            curso: this.curso,
-            atuacao: this.atuacao,
-            lotacao: this.lotacao,
-            respostas: this.answers
-          }
-        }).then(() => {
-          this.$router.push({name: 'index'})
-          EventBus.$emit('flash-success', {
-            title: 'Dados Guardados',
-            text: 'Suas respostas foram guardadas com sucesso!'
-          })
-        }).catch(e => {
-          EventBus.$emit('flash-error', {title: 'Problema', text: 'Não foi possível guardar suas respostas!'})
-
-        })
-      }
-    },
-    created() {
+export default {
+  name: "slug",
+  components: {Card},
+  computed: {
+    skey() {
+      return this.$route.params.slug
     }
+  },
+  data: () => ({
+    ano: 0,
+    fetched: {
+      segmento: {id: 0, nome: null},
+      perguntas: [],
+      objetivas: [],
+      campus: [],
+      cursos: [],
+      lotacao: [],
+      atuacao: [],
+    },
+    curso: "",
+    lotacao: "",
+    campus: "",
+    atuacao: "",
+    answers: {},
+  }),
+  beforeMount() {
+    if (this.skey != '4jn7qduk') {
+      this.fetchCampus()
+    }
+    this.fetchPergutas()
+  },
+  methods: {
+    fetchPergutas() {
+      this.$axios.get(`pergunta?skey=${this.skey}`).then(res => {
+        const {segmento, perguntas, resp_objetivas, ano} = res.data
+        this.fetched.segmento = segmento
+        this.fetched.perguntas = perguntas
+        this.fetched.objetivas = resp_objetivas
+        this.ano = ano
+      })
+    },
+    fetchCampus() {
+      return this.$axios.get('campus').then(res => {
+        this.fetched.campus = res.data.campus;
+      })
+    },
+    fetchCurso() {
+      this.$axios.get(`curso?campus=${this.campus}`).then(res => {
+        this.fetched.cursos = res.data.cursos;
+        this.curso = ''
+      })
+    },
+    fetchLotacao() {
+      this.$axios.get(`lotacao?campus=${this.campus}`).then(res => {
+        this.fetched.lotacao = res.data.lotacao;
+        this.lotacao = ''
+      })
+
+    },
+    fetchAtuacao() {
+      this.$axios.get(`atuacao?campus=${this.campus}`).then(res => {
+        this.fetched.atuacao = res.data.atuacao;
+        this.atuacao = ''
+      })
+    },
+    changedCampus() {
+      this.fetchCurso()
+      this.fetchAtuacao()
+      this.fetchLotacao()
+    },
+    postForm($e) {
+      this.segmento = this.fetched.segmento.id
+      if (this.skey === '4jn7qduk') {
+        this.campus = 15
+      }
+      this.$axios({
+        method: 'post',
+        url: 'pergunta',
+        data: {
+          segmento: this.fetched.segmento.id,
+          campus: this.campus,
+          curso: this.curso,
+          atuacao: this.atuacao,
+          lotacao: this.lotacao,
+          respostas: this.answers,
+          ano: this.ano
+        }
+      }).then(() => {
+        this.$router.push({name: 'index'})
+        EventBus.$emit('flash-success', {
+          title: 'Dados Guardados',
+          text: 'Suas respostas foram guardadas com sucesso!'
+        })
+      }).catch(e => {
+        EventBus.$emit('flash-error', {title: 'Problema', text: 'Não foi possível guardar suas respostas!'})
+
+      })
+    }
+  },
+  created() {
   }
+}
 </script>
 
 <style scoped>

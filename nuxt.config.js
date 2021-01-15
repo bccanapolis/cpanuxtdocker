@@ -49,8 +49,8 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    {src: '~plugins/apexcharts-plugin.js', mode: 'client' },
-    { src: '~/plugins/vue-flash-message.js', mode: 'client' }
+    {src: '~plugins/apexcharts-plugin.js', mode: 'client'},
+    {src: '~/plugins/vue-flash-message.js', mode: 'client'}
     // {src: '~plugins/vuelidate'}
   ],
   /*
@@ -73,8 +73,8 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: 'http://api.cpa.bcc.anapolis.ifg.edu.br/v1'
-    // baseURL: 'http://127.0.0.1:8000/v1'
+    // baseURL: 'http://api.cpa.bcc.anapolis.ifg.edu.br/v1'
+    baseURL: 'http://127.0.0.1:8000/v1'
   },
   /*
   ** Build configuration
