@@ -6,10 +6,10 @@
           <h2 class="mx-auto text-center">{{ fetched.segmento.nome }}</h2>
           <p>Prezado(a) participante, seja bem-vindo(a) ao QUESTIONÁRIO DE AUTOAVALIAÇÃO INSTITUCIONAL do
             IFG. Este questionário é anônimo e visa a obter avaliações referentes às atividades
-            realizadas pelo IFG no ano de 2019. As questões abordam de forma concisa e objetiva os
+            realizadas pelo IFG no ano de {{ ano }}. As questões abordam de forma concisa e objetiva os
             eixos: Desenvolvimento Institucional, Políticas de Gestão e Infraestrutura. A sua opinião
             subsidiará a
-            elaboração do Relatório de Autoavaliação Institucional 2019, que será divulgado à comunidade
+            elaboração do Relatório de Autoavaliação Institucional {{ ano }}, que será divulgado à comunidade
             acadêmica e norteará às tomadas de decisões da gestão para melhorias no IFG. </p>
         </template>
         <template v-slot:content>

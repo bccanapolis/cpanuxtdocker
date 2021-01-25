@@ -23,7 +23,7 @@
       </template>
       <template v-slot:footer>
         <div class="stats">
-          Dados relacionados a avaliazação de 2019, com participação de {{ part_pessoas }} pessoas.
+          Dados relacionados a avaliazação de {{ selectedAno }}, com participação de {{ part_pessoas }} pessoas.
         </div>
       </template>
 
@@ -47,7 +47,8 @@ export default {
     totalChart: false,
     indicatorChart: {},
     tableChart: [],
-    part_pessoas: 0
+    part_pessoas: 0,
+    selectedAno: 2019
   }),
   methods: {
     changeNormal(val) {
@@ -58,6 +59,7 @@ export default {
     },
     updateChart(val) {
       this.queryChart = val
+      this.selectedAno = val['ano']
     },
     chartData(val) {
       this.indicatorChart = val.indicador;
@@ -65,8 +67,6 @@ export default {
       this.part_pessoas = val.total
     },
   },
-  mounted() {
-  }
 }
 </script>
 
