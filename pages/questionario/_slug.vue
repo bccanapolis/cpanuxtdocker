@@ -100,35 +100,46 @@
         </template>
         <template v-slot:content>
           <div class="row" id="perguntaList">
-            <div class="col-md-12" v-for="pergunta in fetched.perguntas" :key="pergunta.id">
-              <div class="form-group">
-                <p class="h3">
-                  {{ pergunta.titulo }}
-                  <span v-if="pergunta.tipo == 1"><b class="text-danger">*</b></span>
+            <div class="col-md-12 mt-1" v-for="eixo in Object.keys(fetched.perguntas)"
+                 :key="Math.random()">
+              <p><small class="text-muted">{{ eixo }}</small></p>
+              <template v-for="dimensao in Object.keys(fetched.perguntas[eixo])">
+                <p style="margin-left: 1rem;"><small style="margin-top: 1rem;" class="text-muted">{{ dimensao }}</small>
                 </p>
-                <div v-if="pergunta.tipo == 1" class="row">
-                  <div v-for="obj in fetched.objetivas" class="form-check col-xs-4 col-sm-2">
-                    <input class="form-check-input respostas" type="radio"
-                           :name="`resposta-${pergunta.id}`"
-                           :id="`resposta-${pergunta.id}-${obj.value}`"
-                           :value="obj.id"
-                           v-bind:required="obj === fetched.objetivas[0]"
-                           v-model="answers[pergunta.id]">
-                    <label class="form-check-label lead"
-                           :for="`resposta-${pergunta.id}-${obj.value}`">
-                      {{ obj.titulo }}
-                    </label>
+                <template v-for="pergunta in fetched.perguntas[eixo][dimensao]">
+                  <div class="form-group" style="margin-left: 2rem;">
+                    <p class="h3">
+                      {{ pergunta.titulo }}
+                      <span v-if="pergunta.tipo == 1"><b class="text-danger">*</b></span>
+                    </p>
+                    <div v-if="pergunta.tipo == 1" class="row" style="flex-direction: row;">
+                      <div v-for="obj in fetched.objetivas"
+                           class="form-check col-xs-4 col-sm-2 flex items-center">
+                        <input class="form-check-input respostas" type="radio"
+                               :name="`resposta-${pergunta.id}`"
+                               :id="`resposta-${pergunta.id}-${obj.value}`"
+                               :value="obj.id"
+                               v-bind:required="obj === fetched.objetivas[0]"
+                               v-model="answers[pergunta.id]">
+                        <label class="form-check-label lead margin-0"
+                               :for="`resposta-${pergunta.id}-${obj.value}`">
+                          {{ obj.titulo }}
+                        </label>
+                      </div>
+                    </div>
+
+                    <textarea v-else class="form-control respostas"
+                              placeholder="Critica ou sugestão"
+                              v-model.trim="answers[pergunta.id]"
+
+                              rows="3"></textarea>
                   </div>
-                </div>
-
-                <textarea v-else class="form-control respostas"
-                          placeholder="Critica ou sugestão"
-                          v-model.trim="answers[pergunta.id]"
-
-                          rows="3"></textarea>
-              </div>
+                </template>
+                <hr v-if="eixo !== Object.keys(fetched.perguntas).slice(-1).pop()">
+              </template>
             </div>
-            <input class="btn btn-info btn-fill pull-right" style="margin-right: 1rem;" type="submit" value="Envia">
+            <input class="btn btn-success btn-fill pull-right" style="margin-right: 1rem;" type="submit"
+                   value="Enviar respostas">
             <div class="clearfix"></div>
           </div>
         </template>
@@ -151,6 +162,7 @@ export default {
   },
   data: () => ({
     ano: 0,
+    colors: ['#fde3cc', '#fbfdcc', '#ccfcd6', '#ccfcec', '#ced3fb'],
     fetched: {
       segmento: {id: 0, nome: null},
       perguntas: [],
@@ -246,5 +258,15 @@ export default {
 </script>
 
 <style scoped>
+.margin-0 {
+  margin: 0;
+}
 
+.items-center {
+  align-items: center;
+}
+
+.mt-1 + .mt-1 {
+  margin-top: 1rem;
+}
 </style>
