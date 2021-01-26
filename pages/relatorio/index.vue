@@ -3,7 +3,7 @@
     <card>
       <template v-slot:content>
         <filterchart @change="updateChart" @normal="changeNormal" @total="changeTotal"
-                     @fetch="filterLoad = true"></filterchart>
+                     @fetch="filterLoad = true" :anos="[2019]"></filterchart>
         <hr>
         <div v-if="filterLoad">
           <div v-if="queryChart.pergunta != 0 && indicatorChart" class="chart-options">
@@ -32,10 +32,10 @@
 </template>
 
 <script>
-import card from "../components/card";
-import filterchart from "../components/filterchart";
-import chart from "../components/chart/chart";
-import tablechart from "../components/tablechart/tablechart";
+import card from "../../components/card";
+import filterchart from "../../components/filterchart";
+import chart from "../../components/chart/chart";
+import tablechart from "../../components/tablechart/tablechart";
 
 export default {
   name: "relatorio",
