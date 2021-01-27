@@ -20,5 +20,6 @@ services:
     networks:
       nginx-proxy:
 
-networks: 
-  nginx-proxy:
+networks:
+  external:
+    name: nginx-proxy
