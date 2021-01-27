@@ -17,9 +17,8 @@ services:
       HTTP_PORT: 6000
       LETSENCRYPT_HOST: cpa.bcc.anapolis.ifg.edu.br
       LETSENCRYPT_EMAIL: "devbaraus@gmail.com"
-    networks:
-      nginx-proxy:
 
 networks:
-  external:
-    name: nginx-proxy
+  default:
+    external:
+      name: nginx-proxy
