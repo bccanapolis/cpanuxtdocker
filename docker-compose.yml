@@ -19,3 +19,6 @@ services:
       LETSENCRYPT_EMAIL: "devbaraus@gmail.com"
     networks:
       nginx-proxy:
+
+networks: 
+  nginx-proxy:
