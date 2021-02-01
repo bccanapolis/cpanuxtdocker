@@ -230,7 +230,7 @@ export default {
       }
       this.$axios({
         method: 'post',
-        url: 'pergunta',
+        url: 'resposta',
         data: {
           segmento: this.fetched.segmento.id,
           campus: this.campus,
