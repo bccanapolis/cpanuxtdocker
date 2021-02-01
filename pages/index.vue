@@ -9,7 +9,7 @@
           movimento de avaliar por avaliar. Busca contribuir efetivamente para promoção de melhorias na Instituição por
           meio da disponibilização dos dados, análises e sugestões da CPA.</p>
         <div style="display: flex; -moz-column-gap: 2rem; -webkit-column-gap: 2rem; column-gap: 2rem; row-gap: 1rem; -moz-row-gap: 2rem; -webkit-row-gap: 2rem; flex-wrap: wrap; justify-content: center;">
-          <a download="true" href="/relatorio_cpa_ifg_2019.pdf" class="btn btn-success text-center text-uppercase">baixar relatório</a>
+          <a download="relatorio_cpa_ifg_2019.pdf" href="/relatorio_cpa_ifg_2019.pdf" class="btn btn-success text-center text-uppercase">baixar relatório</a>
           <nuxt-link to="/relatorio" class="btn text-center text-uppercase">relatório digital</nuxt-link>
         </div>
 

@@ -186,7 +186,7 @@ export default {
   },
   methods: {
     fetchPergutas() {
-      this.$axios.get(`pergunta?skey=${this.skey}`).then(res => {
+      this.$axios.get(`resposta?skey=${this.skey}`).then(res => {
         const {segmento, perguntas, resp_objetivas, ano} = res.data
         this.fetched.segmento = segmento
         this.fetched.perguntas = perguntas
