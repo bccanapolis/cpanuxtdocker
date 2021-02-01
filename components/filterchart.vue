@@ -4,18 +4,38 @@
     <div>
       <div class="row">
         <div class="col-md-2 form-group">
-          <select v-model="selectedAno" @change="() => {this.fetchGrafico(); this.clearAll(); this.emitChange();}"
+          <label for="anoChart">Ano</label>
+          <select v-model="selectedAno" @change="() => {this.fetchEixo(); this.clearAll(); this.emitChange();}"
                   class="form-control select-title" id="anoChart">
             <option v-for="item in listAno" @select="item == listAno[0]" :value="item">{{ item }}</option>
           </select>
         </div>
-        <div class="col-sm-10 form-group">
-          <select v-model="selectedGrafico"
+        <div class="col-sm-4 form-group">
+          <label for="eixoChart">Eixo</label>
+          <select v-model="selectedEixo" @change="() => {this.fetchDimensao(); this.clearAll(); this.emitChange();}"
+                  class="form-control select-title" id="eixoChart">
+            <option value=0 selected>Todos</option>
+            <option v-for="item in listEixo" :value="item.id">{{ item.nome }}</option>
+          </select>
+        </div>
+        <div class="col-md-6 form-group" v-if="selectedEixo != 0">
+          <label for="dimensaoChart">Dimensão</label>
+          <select v-model="selectedDimensao" @change="() => {this.fetchPergunta(); this.clearAll(); this.emitChange();}"
+                  class="form-control select-title" id="dimensaoChart">
+            <option value=0 selected>Todos</option>
+            <option v-for="item in listDimensao" :value="item.id"><abbr :title="item.nome">{{ item.nome }}</abbr>
+            </option>
+          </select>
+        </div>
+
+        <div class="col-sm-12 form-group">
+          <label for="perguntaChart">Perguntas</label>
+          <select v-model="selectedPergunta"
                   @change="() => {this.fetchSegmento(); this.emitChange();  }"
-                  id="graficoChart"
+                  id="perguntaChart"
                   class="form-control select-title">
             <option value=0 selected>Participação de pessoas em {{ this.selectedAno }}</option>
-            <option v-for="item in listGrafico" :value="item.id">{{ item.titulo }}</option>
+            <option v-for="item in listPergunta" :value="item.id">{{ item.titulo }}</option>
           </select>
         </div>
 
@@ -49,7 +69,7 @@
           </select>
         </div>
 
-        <div v-if="selectedSegmento == 7 && selectedGrafico != 0" id="cursoList" class="col-md-4 form-group">
+        <div v-if="selectedSegmento == 7 && selectedPergunta != 0" id="cursoList" class="col-md-4 form-group">
           <label for="cursoChart">Curso</label>
           <select v-model="selectedCurso" @change="emitChange" :disabled="selectedCampus == 0"
                   class="form-control"
@@ -59,7 +79,7 @@
           </select>
         </div>
 
-        <div v-if="selectedSegmento == 1 && selectedGrafico != 0" id="atuacaoList" class="col-md-4 form-group">
+        <div v-if="selectedSegmento == 1 && selectedPergunta != 0" id="atuacaoList" class="col-md-4 form-group">
           <label for="atuacaoChart">Atuação</label>
           <select v-model="selectedAtuacao" @change="emitChange" :disabled="selectedCampus == 0"
                   class="form-control"
@@ -69,7 +89,7 @@
           </select>
         </div>
 
-        <div v-if="(selectedSegmento == 6 || selectedSegmento == 4) && selectedGrafico != 0" id="lotacaoList"
+        <div v-if="(selectedSegmento == 6 || selectedSegmento == 4) && selectedPergunta != 0" id="lotacaoList"
              class="col-md-4 form-group">
           <label for="lotacaoChart">Lotação</label>
           <select v-model="selectedLotacao" @change="emitChange" :disabled="selectedCampus == 0"
@@ -81,7 +101,7 @@
         </div>
 
       </div>
-      <div class="row" v-if="selectedGrafico != 0">
+      <div class="row" v-if="selectedPergunta != 0">
         <div class="form-group col-md-3 col-sm-6 ">
           <label class="switch">
             <input id="chart-visualization" v-model="selectedNormal" @change="emitNormal" type="checkbox">
@@ -111,22 +131,26 @@ export default {
     anos: Array
   },
   data: () => ({
-    selectedGrafico: 0,
+    selectedPergunta: 0,
     selectedSegmento: 0,
     selectedCampus: 0,
     selectedAtuacao: 0,
     selectedLotacao: 0,
     selectedCurso: 0,
     selectedAno: null,
+    selectedEixo: 0,
+    selectedDimensao: 0,
     selectedNormal: false,
     selectedTotal: false,
-    listGrafico: [],
+    listPergunta: [],
     listAno: [],
     listSegmento: [],
     listCurso: [],
     listLotacao: [],
     listCampus: [],
     listAtuacao: [],
+    listEixo: [],
+    listDimensao: [],
   }),
   methods: {
     clearAll() {
@@ -135,44 +159,59 @@ export default {
       this.selectedCurso = 0;
       this.selectedAtuacao = 0;
       this.selectedLotacao = 0;
-      this.selectedGrafico = 0;
+      this.selectedPergunta = 0;
     },
-    fetchGrafico() {
-      this.selectedGrafico = 0;
-      this.$axios.get(`/grafico?ano=${this.selectedAno}`).then(res => {
-        this.listGrafico = res.data.dados;
+    fetchPergunta() {
+      this.selectedPergunta = 0;
+      this.$axios.get(`/pergunta?ano=${this.selectedAno}&eixo=${this.selectedEixo}&dimensao=${this.selectedDimensao}`).then(res => {
+        this.listPergunta = res.data.dados;
         this.fetchSegmento()
       })
     },
+    fetchEixo() {
+      this.selectedEixo = 0;
+      this.$axios.get(`/eixo?ano=${this.selectedAno}`).then(res => {
+        this.listEixo = res.data.eixos;
+        this.fetchDimensao()
+      })
+    },
+    fetchDimensao() {
+      this.selectedDimensao = 0;
+      this.$axios.get(`/dimensao?ano=${this.selectedAno}&eixo=${this.selectedEixo}`).then(res => {
+        this.listDimensao = res.data.dimensoes;
+        this.fetchPergunta()
+      })
+    },
+
     fetchSegmento() {
       this.selectedSegmento = 0;
-      this.$axios.get(`/segmento?pergunta=${this.selectedGrafico}&ano=${this.selectedAno}`).then(res => {
+      this.$axios.get(`/segmento?pergunta=${this.selectedPergunta}&ano=${this.selectedAno}${this.selectedEixo != 0 ? '&eixo=' + this.selectedEixo : ''}${this.selectedDimensao != 0 ? '&dimensao=' + this.selectedDimensao : ''}`).then(res => {
         this.listSegmento = res.data.segmentos;
         this.fetchCampus()
       })
     },
     fetchCampus() {
       this.selectedCampus = 0;
-      this.$axios.get(`/campus?pergunta=${this.selectedGrafico}&ano=${this.selectedAno}${this.selectedSegmento != 0 ? '&segmento=' + this.selectedSegmento : ''}`).then(res => {
+      this.$axios.get(`/campus?pergunta=${this.selectedPergunta}&ano=${this.selectedAno}${this.selectedEixo != 0 ? '&eixo=' + this.selectedEixo : ''}${this.selectedDimensao != 0 ? '&dimensao=' + this.selectedDimensao : ''}${this.selectedSegmento != 0 ? '&segmento=' + this.selectedSegmento : ''}`).then(res => {
         this.listCampus = res.data.campus;
         this.emitLoaded();
       })
     },
     fetchCurso() {
       this.selectedCurso = 0;
-      this.$axios.get(`/curso?pergunta=${this.selectedGrafico}&ano=${this.selectedAno}&campus=${this.selectedCampus}${this.selectedSegmento != 0 ? '&segmento=' + this.selectedSegmento : ''}`).then(res => {
+      this.$axios.get(`/curso?pergunta=${this.selectedPergunta}&ano=${this.selectedAno}${this.selectedEixo != 0 ? '&eixo=' + this.selectedEixo : ''}${this.selectedDimensao != 0 ? '&dimensao=' + this.selectedDimensao : ''}&campus=${this.selectedCampus}${this.selectedSegmento != 0 ? '&segmento=' + this.selectedSegmento : ''}`).then(res => {
         this.listCurso = res.data.cursos;
       })
     },
     fetchAtuacao() {
       this.selectedAtuacao = 0;
-      this.$axios.get(`/atuacao?pergunta=${this.selectedGrafico}&ano=${this.selectedAno}&campus=${this.selectedCampus}${this.selectedSegmento != 0 ? '&segmento=' + this.selectedSegmento : ''}`).then(res => {
+      this.$axios.get(`/atuacao?pergunta=${this.selectedPergunta}&ano=${this.selectedAno}${this.selectedEixo != 0 ? '&eixo=' + this.selectedEixo : ''}${this.selectedDimensao != 0 ? '&dimensao=' + this.selectedDimensao : ''}&campus=${this.selectedCampus}${this.selectedSegmento != 0 ? '&segmento=' + this.selectedSegmento : ''}`).then(res => {
         this.listAtuacao = res.data.atuacao;
       })
     },
     fetchLotacao() {
       this.selectedLotacao = 0;
-      this.$axios.get(`/lotacao?pergunta=${this.selectedGrafico}&ano=${this.selectedAno}&campus=${this.selectedCampus}${this.selectedSegmento != 0 ? '&segmento=' + this.selectedSegmento : ''}`).then(res => {
+      this.$axios.get(`/lotacao?pergunta=${this.selectedPergunta}&ano=${this.selectedAno}${this.selectedEixo != 0 ? '&eixo=' + this.selectedEixo : ''}${this.selectedDimensao != 0 ? '&dimensao=' + this.selectedDimensao : ''}&campus=${this.selectedCampus}${this.selectedSegmento != 0 ? '&segmento=' + this.selectedSegmento : ''}`).then(res => {
         this.listLotacao = res.data.lotacao;
       })
     },
@@ -185,7 +224,7 @@ export default {
           this.selectedAno = this.listAno[0];
         }
         this.emitChange();
-        this.fetchGrafico();
+        this.fetchEixo();
       })
     },
     emitChange() {
@@ -193,9 +232,11 @@ export default {
         campus: this.selectedCampus,
         curso: this.selectedCurso,
         lotacao: this.selectedLotacao,
-        pergunta: this.selectedGrafico,
+        pergunta: this.selectedPergunta,
         segmento: this.selectedSegmento,
         atuacao: this.selectedAtuacao,
+        eixo: this.selectedEixo,
+        dimensao: this.selectedDimensao,
         ano: this.selectedAno,
       })
     },

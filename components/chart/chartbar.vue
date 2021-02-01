@@ -169,12 +169,14 @@
         return series
       },
       async fetchData() {
-        let reqCampus = typeof this.query.campus != 'undefined' && this.query.campus != null && this.query.campus != 0 ? `&campus=${this.query.campus}` : ''
-        let reqCurso = typeof this.query.curso != 'undefined' && this.query.curso != null && this.query.curso != 0 ? `&curso=${this.query.curso}` : ''
-        let reqAtuacao = typeof this.query.atuacao != 'undefined' && this.query.atuacao != null && this.query.atuacao != 0 ? `&atuacao=${this.query.atuacao}` : ''
-        let reqLotacao = typeof this.query.lotacao != 'undefined' && this.query.lotacao != null && this.query.lotacao != 0 ? `&lotacao=${this.query.lotacao}` : ''
-        let reqSegmento = typeof this.query.segmento != 'undefined' && this.query.segmento != null && this.query.segmento != 0 ? `&segmento=${this.query.segmento}` : ''
-        return this.$axios.get(`/grafico?pergunta=${this.query.pergunta}&ano=${this.query.ano}${reqSegmento}${reqAtuacao}${reqLotacao}${reqCampus}${reqCurso}`)
+        let reqCurso = !!parseInt(this.query.curso) ? `&curso=${this.query.curso}` : ''
+        let reqAtuacao = !!parseInt(this.query.atuacao) ? `&atuacao=${this.query.atuacao}` : ''
+        let reqLotacao = !!parseInt(this.query.lotacao) ? `&lotacao=${this.query.lotacao}` : ''
+        let reqCampus = !!parseInt(this.query.campus) ? `&campus=${this.query.campus}` : ''
+        let reqSegmento = !!parseInt(this.query.segmento) ? `&segmento=${this.query.segmento}` : ''
+        let reqEixo = !!parseInt(this.query.eixo) ? `&eixo=${this.query.eixo}` : ''
+        let reqDimensao = !!parseInt(this.query.dimensao) ? `&dimensao=${this.query.dimensao}` : ''
+        return this.$axios.get(`/grafico?pergunta=${this.query.pergunta}&ano=${this.query.ano}${reqEixo}${reqDimensao}${reqSegmento}${reqAtuacao}${reqLotacao}${reqCampus}${reqCurso}`)
           .then(result => {
             this.rawRoles = result.data.roles;
             this.chartOptions.xaxis.categories = result.data.roles;
