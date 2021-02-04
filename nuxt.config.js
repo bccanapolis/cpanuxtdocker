@@ -6,7 +6,7 @@ const manifest = {
   display: 'standalone',
   background_color: '#ffffff',
   theme_color: '#79b334',
-  site_url: 'http://cpa.bcc.anapolis.ifg.edu.br/',
+  site_url: 'http://cpa.bcc.anapolis.ifg.edu.br',
   keywords: ['questionarios', 'relatorio', 'ifg', 'perguntas', 'repostas', 'cpa', 'comissão', 'própria', 'avaliação']
 }
 
