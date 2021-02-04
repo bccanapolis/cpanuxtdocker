@@ -1,3 +1,15 @@
+const manifest = {
+  name: 'IFG Comissão Própria de Avaliação',
+  short_name: 'IFG CPA',
+  description: 'Plataforma de questionários e relatórios da Comissão Própria de Avaliação do Instituto Federal de Goiás.',
+  lang: 'pt',
+  display: 'standalone',
+  background_color: '#ffffff',
+  theme_color: '#79b334',
+  site_url: 'https://cpa.bcc.anapolis.ifg.edu.br/',
+  keywords: ['questionarios', 'relatorio', 'ifg', 'perguntas', 'repostas', 'cpa', 'comissão', 'própria', 'avaliação']
+}
+
 export default {
   mode: 'spa',
   generate: {
@@ -15,11 +27,34 @@ export default {
     htmlAttrs: {
       lang: 'pt-br',
     },
-    title: 'Comissão Própria de Avaliação',
+    title: manifest['name'],
     meta: [
       {charset: 'utf-8'},
       {name: 'viewport', content: 'width=device-width, initial-scale=1'},
-      {hid: 'description', name: 'description', content: process.env.npm_package_description || ''}
+      {hid: 'description', name: 'description', content: manifest['description']},
+
+      // open graph / facebook
+      {property: 'og:type', content: 'website'},
+      {property: 'og:title', content: manifest['name']},
+      {property: 'og:site_name', content: manifest['name']},
+      {property: 'og:description', content: manifest['description']},
+
+      {property: 'og:image', content: `${manifest['site_url']}/img/metaimage_app.png`},
+      {property: 'og:image:type', content: 'image/png'},
+      {property: 'og:image:width', content: '1200'},
+      {property: 'og:image:height', content: '628'},
+      //
+      {property: 'og:image', itemprop: 'image', content: `${manifest['site_url']}/img/metaimage_app_whatsapp.png`},
+      {property: 'og:image:type', content: 'image/png'},
+      {property: 'og:image:width', content: '400'},
+      {property: 'og:image:height', content: '400'},
+
+      // twitter
+      {property: 'twitter:card', content: 'summary_large_image'},
+      {property: 'twitter:url', content: manifest['site_url']},
+      {property: 'twitter:title', content: manifest['name']},
+      {property: 'twitter:description', content: manifest['description']},
+      {property: 'twitter:image', content: `${manifest['site_url']}/img/metaimage_app.png`}
     ],
     link: [
       {rel: 'icon', type: 'image/x-icon', href: '/favicon.ico'},

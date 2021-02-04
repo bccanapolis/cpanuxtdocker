@@ -1,6 +1,6 @@
 <template>
   <div class="wrapper">
-    <div class="sidebar" data-color="green" data-image="/img/sidebar-4.jpg">
+    <div style="background-image: url(/img/sidebar-4.jpg);" class="sidebar" data-color="green" data-image="/img/sidebar-4.jpg">
       <div class="sidebar-wrapper">
         <div class="logo">
           <div>
