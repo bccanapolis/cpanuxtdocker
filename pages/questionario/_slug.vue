@@ -154,13 +154,21 @@ import {EventBus} from "../../eventbus";
 
 export default {
   name: "slug",
-  components: {Card},
+  head() {
+    return {
+      title: `Questionário do ${this.$route.params.slug === 's4UkHMQC' ? 'Estudante' : this.$route.params.slug === 'zc3WsGum' ? 'Docente' : 'Servidor Técnico'} | IFG Comissão Própria de Avaliação`
+    }
+  },
+  components: {
+    Card
+  },
   computed: {
     skey() {
       return this.$route.params.slug
     }
   },
   data: () => ({
+    segmento_nome: '',
     ano: 0,
     colors: ['#fde3cc', '#fbfdcc', '#ccfcd6', '#ccfcec', '#ced3fb'],
     fetched: {
@@ -210,7 +218,6 @@ export default {
         this.fetched.lotacao = res.data.lotacao;
         this.lotacao = ''
       })
-
     },
     fetchAtuacao() {
       this.$axios.get(`atuacao?campus=${this.campus}`).then(res => {
@@ -248,12 +255,9 @@ export default {
         })
       }).catch(e => {
         EventBus.$emit('flash-error', {title: 'Problema', text: 'Não foi possível guardar suas respostas!'})
-
       })
     }
   },
-  created() {
-  }
 }
 </script>
 

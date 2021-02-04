@@ -39,6 +39,11 @@ import tablechart from "../../components/tablechart/tablechart";
 
 export default {
   name: "relatorio",
+  head() {
+    return {
+      title: `Relatório de ${this.selectedAno} | IFG Comissão Própria de Avaliação`
+    }
+  },
   components: {card, filterchart, chart, tablechart},
   data: () => ({
     filterLoad: false,
