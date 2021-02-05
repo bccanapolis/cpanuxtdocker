@@ -11,7 +11,7 @@ const manifest = {
 }
 
 export default {
-  mode: 'spa',
+  target: 'static',
   generate: {
     routes: [
       'questionario/s4UkHMQC',
