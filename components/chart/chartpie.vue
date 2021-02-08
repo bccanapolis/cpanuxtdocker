@@ -30,6 +30,7 @@ export default {
     query(val) {
       this.fetchData().then(() => {
         this.$refs.chart.updateOptions({
+          series: this.series,
           labels: this.labels
         });
       });
@@ -107,9 +108,6 @@ export default {
         final[this.labels.lastIndexOf(item.label)] = item.count
       })
       return final
-    },
-    normalizeData() {
-
     },
     async fetchData() {
       let reqCampus = !!parseInt(this.query.campus) ? `&campus=${this.query.campus}` : ''
