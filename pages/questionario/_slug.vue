@@ -156,7 +156,7 @@ export default {
   name: "slug",
   head() {
     return {
-      title: `Questionário do ${this.$route.params.slug === 's4UkHMQC' ? 'Estudante' : this.$route.params.slug === 'zc3WsGum' ? 'Docente' : 'Servidor Técnico'} | IFG Comissão Própria de Avaliação`
+      title: `Questionário do ${this.fetched.segmento.nome} | IFG Comissão Própria de Avaliação`
     }
   },
   components: {
