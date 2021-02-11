@@ -61,8 +61,8 @@ export default {
       {rel: 'stylesheet', href: '/css/bootstrap.min.css'},
       {rel: 'stylesheet', href: '/css/animate.min.css'},
       {rel: 'stylesheet', href: '/css/light-bootstrap-dashboard.css?v=1.4.0'},
-      {rel: 'stylesheet', href: 'http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'},
-      {rel: 'stylesheet', href: 'http://fonts.googleapis.com/css?family=Roboto:400,700,300'},
+      {rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'},
+      {rel: 'stylesheet', href: 'https://fonts.googleapis.com/css?family=Roboto:400,700,300'},
       {rel: 'stylesheet', href: '/css/pe-icon-7-stroke.css'},
     ],
     script: [
@@ -108,7 +108,7 @@ export default {
   ** See https://axios.nuxtjs.org/options
   */
   axios: {
-    baseURL: process.env['API_HOST'] || 'http://api.cpa.bcc.anapolis.ifg.edu.br/v1'
+    baseURL: process.env['API_HOST'] || 'https://api.cpa.bcc.anapolis.ifg.edu.br/v1'
     // baseURL: 'http://127.0.0.1:8000/v1'
   },
   /*
