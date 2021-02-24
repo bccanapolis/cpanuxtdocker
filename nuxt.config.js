@@ -13,11 +13,14 @@ const manifest = {
 export default {
   target: 'static',
   generate: {
-    routes: [
-      '/questionario/s4UkHMQC',
-      '/questionario/zc3WsGum',
-      '/questionario/4jn7qduk',
-      '/questionario/g3YTAfpT',
+    // routes: [
+    //   '/questionario/s4UkHMQC',
+    //   '/questionario/zc3WsGum',
+    //   '/questionario/4jn7qduk',
+    //   '/questionario/g3YTAfpT',
+    // ],
+    exclude: [
+      /\^\/questionario/
     ]
   },
   /*
