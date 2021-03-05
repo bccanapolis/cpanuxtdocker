@@ -3,7 +3,7 @@
     <card>
       <template v-slot:content>
         <filterchart @change="updateChart" @normal="changeNormal" @total="changeTotal"
-                     @fetch="filterLoad = true" :anos="[2019]"></filterchart>
+                     @fetch="filterLoad = true" :anos="[2019, 2020]"></filterchart>
         <hr>
         <div v-if="filterLoad">
           <div v-if="queryChart.pergunta != 0 && indicatorChart" class="chart-options">
