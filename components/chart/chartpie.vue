@@ -73,11 +73,14 @@ export default {
           show: true
         }
       },
-      toolbar: {
-        show: false,
-        tools: {
-          download: false
-        }
+      chart: {
+        toolbar: {
+          show: true,
+          tools: {
+            download: true,
+            selection: true
+          }
+        },
       },
       stroke: {
         show: true,
