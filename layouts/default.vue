@@ -86,53 +86,16 @@
       <!--      </footer>-->
 
     </div>
-    <FlashMessage style="z-index: 9999; position: absolute;" position="right bottom"/>
-
   </div>
-
 </template>
 
 <script>
-import {EventBus} from "../eventbus";
 import navbar from "../components/navbar";
 
 export default {
   components: {
     navbar
   },
-  created() {
-    EventBus.$on('flash-error', msg => {
-      this.flashMessage.error({
-        title: msg.title,
-        message: msg.text,
-        time: 5000
-      });
-    })
-    EventBus.$on('flash-warning', msg => {
-      this.flashMessage.warning({
-        title: msg.title,
-        message: msg.text,
-        time: 5000
-      });
-    })
-    EventBus.$on('flash-info', msg => {
-      this.flashMessage.info({
-        title: msg.title,
-        message: msg.text,
-        time: 5000
-      });
-    })
-    EventBus.$on('flash-success', msg => {
-      this.flashMessage.success({
-        title: msg.title,
-        message: msg.text,
-        time: 5000
-      });
-    })
-  },
-  mounted() {
-
-  }
 }
 </script>
 

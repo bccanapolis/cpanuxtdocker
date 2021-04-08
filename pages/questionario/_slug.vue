@@ -150,94 +150,96 @@
 
 <script>
 import Card from "../../components/card";
-import {EventBus} from "../../eventbus";
 
 export default {
   name: "slug",
   head() {
     return {
       title: `Questionário do ${this.fetched.segmento.nome} | IFG Comissão Própria de Avaliação`
-    }
+    };
   },
   components: {
     Card
   },
   computed: {
     skey() {
-      return this.$route.params.slug
+      return this.$route.params.slug;
     }
   },
+  async asyncData({ $axios, route, redirect }) {
+    let skey = route.params.slug;
+    let res, campus;
+
+    try {
+      res = await $axios.get(`resposta?skey=${skey}`);
+    } catch (e) {
+      return redirect(200, "/");
+    }
+
+    const { segmento, perguntas, resp_objetivas, ano } = res.data;
+
+    if (skey != "4jn7qduk") {
+      campus = (await $axios.get("campus")).data.campus;
+    }
+
+    return {
+      fetched: {
+        segmento,
+        perguntas,
+        campus,
+        objetivas: resp_objetivas
+      },
+      ano
+    };
+  },
   data: () => ({
-    segmento_nome: '',
+    segmento_nome: "",
     ano: 0,
-    colors: ['#fde3cc', '#fbfdcc', '#ccfcd6', '#ccfcec', '#ced3fb'],
+    colors: ["#fde3cc", "#fbfdcc", "#ccfcd6", "#ccfcec", "#ced3fb"],
     fetched: {
-      segmento: {id: 0, nome: null},
-      perguntas: [],
-      objetivas: [],
       campus: [],
       cursos: [],
       lotacao: [],
-      atuacao: [],
+      atuacao: []
     },
     curso: "",
     lotacao: "",
     campus: "",
     atuacao: "",
-    answers: {},
+    answers: {}
   }),
-  beforeMount() {
-    if (this.skey != '4jn7qduk') {
-      this.fetchCampus()
-    }
-    this.fetchPergutas()
-  },
   methods: {
-    fetchPergutas() {
-      this.$axios.get(`resposta?skey=${this.skey}`).then(res => {
-        const {segmento, perguntas, resp_objetivas, ano} = res.data
-        this.fetched.segmento = segmento
-        this.fetched.perguntas = perguntas
-        this.fetched.objetivas = resp_objetivas
-        this.ano = ano
-      })
-    },
-    fetchCampus() {
-      return this.$axios.get('campus').then(res => {
-        this.fetched.campus = res.data.campus;
-      })
-    },
     fetchCurso() {
       this.$axios.get(`curso?campus=${this.campus}`).then(res => {
         this.fetched.cursos = res.data.cursos;
-        this.curso = ''
-      })
+        this.curso = "";
+      });
     },
     fetchLotacao() {
       this.$axios.get(`lotacao?campus=${this.campus}`).then(res => {
         this.fetched.lotacao = res.data.lotacao;
-        this.lotacao = ''
-      })
+        this.lotacao = "";
+      });
     },
     fetchAtuacao() {
       this.$axios.get(`atuacao?campus=${this.campus}`).then(res => {
         this.fetched.atuacao = res.data.atuacao;
-        this.atuacao = ''
-      })
+        this.atuacao = "";
+      });
     },
     changedCampus() {
-      this.fetchCurso()
-      this.fetchAtuacao()
-      this.fetchLotacao()
+      this.fetchCurso();
+      this.fetchAtuacao();
+      this.fetchLotacao();
     },
     postForm($e) {
-      this.segmento = this.fetched.segmento.id
-      if (this.skey === '4jn7qduk') {
-        this.campus = 15
+      this.segmento = this.fetched.segmento.id;
+      if (this.skey === "4jn7qduk") {
+        this.campus = 15;
       }
       this.$axios({
-        method: 'post',
-        url: 'resposta',
+        method: "post",
+        url: "resposta",
         data: {
           segmento: this.fetched.segmento.id,
           campus: this.campus,
@@ -248,17 +250,35 @@ export default {
           ano: this.ano
         }
       }).then(() => {
-        this.$router.push({name: 'index'})
-        EventBus.$emit('flash-success', {
-          title: 'Dados Guardados',
-          text: 'Suas respostas foram guardadas com sucesso!'
-        })
+        this.$router.push({ name: "index" });
+        $.notify({
+          icon: "pe-7s-like2",
+          message: "Obrigado!<br>Suas repostas foram armazenadas com êxito."
+
+        }, {
+          type: "success",
+          timer: 5000,
+          placement: {
+            from: "top",
+            align: "right"
+          }
+        });
       }).catch(e => {
-        EventBus.$emit('flash-error', {title: 'Problema', text: 'Não foi possível guardar suas respostas!'})
-      })
+        $.notify({
+          icon: "pe-7s-close",
+          message: "Não foi possível armazenar suas respostas.<br>Tente novamente mais tarde!"
+        }, {
+          type: "danger",
+          timer: 5000,
+          placement: {
+            from: "top",
+            align: "right"
+          }
+        });
+      });
     }
-  },
-}
+  }
+};
 </script>
 
 <style scoped>
