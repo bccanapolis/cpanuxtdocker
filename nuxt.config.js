@@ -17,27 +17,27 @@ const manifest = {
     "cpa",
     "comissão",
     "própria",
-    "avaliação",
-  ],
+    "avaliação"
+  ]
 };
 
 export default {
   target: "static",
   generate: {
-    // routes: [
-    //   '/questionario/s4UkHMQC',
-    //   '/questionario/zc3WsGum',
-    //   '/questionario/4jn7qduk',
-    //   '/questionario/g3YTAfpT',
-    // ],
-    exclude: [/\^\/questionario/],
+    routes: [
+      "/questionario/s4UkHMQC",
+      "/questionario/zc3WsGum",
+      "/questionario/4jn7qduk",
+      "/questionario/g3YTAfpT"
+    ]
+    // exclude: [/\^\/questionario/]
   },
   /*
    ** Headers of the page
    */
   head: {
     htmlAttrs: {
-      lang: "pt-br",
+      lang: "pt-br"
     },
     title: manifest["name"],
     meta: [
@@ -46,7 +46,7 @@ export default {
       {
         hid: "description",
         name: "description",
-        content: manifest["description"],
+        content: manifest["description"]
       },
 
       // open graph / facebook
@@ -57,7 +57,7 @@ export default {
 
       {
         property: "og:image",
-        content: `${manifest["site_url"]}/img/metaimage_app.png`,
+        content: `${manifest["site_url"]}/img/metaimage_app.png`
       },
       { property: "og:image:type", content: "image/png" },
       { property: "og:image:width", content: "1200" },
@@ -66,7 +66,7 @@ export default {
       {
         property: "og:image",
         itemprop: "image",
-        content: `${manifest["site_url"]}/img/metaimage_app_whatsapp.png`,
+        content: `${manifest["site_url"]}/img/metaimage_app_whatsapp.png`
       },
       { property: "og:image:type", content: "image/png" },
       { property: "og:image:width", content: "400" },
@@ -79,8 +79,8 @@ export default {
       { property: "twitter:description", content: manifest["description"] },
       {
         property: "twitter:image",
-        content: `${manifest["site_url"]}/img/metaimage_app.png`,
-      },
+        content: `${manifest["site_url"]}/img/metaimage_app.png`
+      }
     ],
     link: [
       { rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
@@ -90,13 +90,13 @@ export default {
       {
         rel: "stylesheet",
         href:
-          "https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css",
+          "https://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css"
       },
       {
         rel: "stylesheet",
-        href: "https://fonts.googleapis.com/css?family=Roboto:400,700,300",
+        href: "https://fonts.googleapis.com/css?family=Roboto:400,700,300"
       },
-      { rel: "stylesheet", href: "/css/pe-icon-7-stroke.css" },
+      { rel: "stylesheet", href: "/css/pe-icon-7-stroke.css" }
     ],
     script: [
       { src: "/js/jquery.3.2.1.min.js", type: "text/javascript" },
@@ -104,9 +104,9 @@ export default {
       { src: "/js/bootstrap-notify.js", type: "text/javascript" },
       {
         src: "/js/light-bootstrap-dashboard.js?v=1.4.0",
-        type: "text/javascript",
-      },
-    ],
+        type: "text/javascript"
+      }
+    ]
   },
   /*
    ** Customize the progress-bar color
@@ -127,24 +127,28 @@ export default {
     [
       "@nuxtjs/google-analytics",
       {
-        id: "UA-158720692-1",
-      },
-    ],
+        id: "UA-158720692-1"
+      }
+    ]
   ],
   /*
    ** Nuxt.js modules
    */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
-    "@nuxtjs/axios",
+    "@nuxtjs/axios"
   ],
   /*
    ** Axios module configuration
    ** See https://axios.nuxtjs.org/options
    */
   axios: {
-    baseURL: process.env['API_HOST'] || 'https://api.cpa.bcc.anapolis.ifg.edu.br/v1'
-    // baseURL: "http://127.0.0.1:8000/v1",
+    baseURL: process.env["API_HOST"] || "http://127.0.0.1:8000/v1"
+  },
+
+  env: {
+    QUEST_END_DATE: process.env["QUEST_END_DATE"],
+    QUEST_START_DATE: process.env["QUEST_START_DATE"]
   },
   /*
    ** Build configuration
@@ -153,6 +157,6 @@ export default {
     /*
      ** You can extend webpack config here
      */
-    extend(config, ctx) {},
-  },
+    extend(config, ctx) {}
+  }
 };

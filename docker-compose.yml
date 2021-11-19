@@ -3,6 +3,8 @@ version: "3"
 services:
   nuxt:
     build: .
+    env_file:
+      - .env
     container_name: cpa-front
     restart: always
     ports:

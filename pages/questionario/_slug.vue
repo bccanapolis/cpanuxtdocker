@@ -3,7 +3,7 @@
     <form @submit.prevent="postForm">
       <card>
         <template v-slot:header>
-          <h2 class="mx-auto text-center">{{ fetched.segmento.nome }}</h2>
+          <h2 class="mx-auto text-center">{{ fetchedSegmento.nome }}</h2>
           <p>Prezado(a) participante, seja bem-vindo(a) ao QUESTIONÁRIO DE AUTOAVALIAÇÃO INSTITUCIONAL do
             IFG. Este questionário é anônimo e visa a obter avaliações referentes às atividades
             realizadas pelo IFG no ano de {{ ano }}. As questões abordam de forma concisa e objetiva os
@@ -32,7 +32,7 @@
                   v-model="campus"
                 >
                   <option value="" disabled selected>Selecione seu campus</option>
-                  <option v-for="it in fetched.campus" :value="it.id">{{ it.nome }}</option>
+                  <option v-for="it in fetchedCampus" :value="it.id">{{ it.nome }}</option>
                 </select>
               </div>
             </div>
@@ -50,7 +50,7 @@
                   oninput="this.setCustomValidity('')"
                 >
                   <option value="" disabled selected>Selecione seu curso</option>
-                  <option v-for="it in fetched.cursos" :value="it.id">{{ it.nome }}</option>
+                  <option v-for="it in fetchedCursos" :value="it.id">{{ it.nome }}</option>
                 </select>
               </div>
             </div>
@@ -68,7 +68,7 @@
                   oninput="this.setCustomValidity('')"
                 >
                   <option value="" disabled selected>Selecione sua lotação</option>
-                  <option v-for="it in fetched.lotacao" :value="it.id">{{ it.nome }}</option>
+                  <option v-for="it in fetchedLotacao" :value="it.id">{{ it.nome }}</option>
                 </select>
               </div>
             </div>
@@ -86,7 +86,7 @@
                   oninput="this.setCustomValidity('')"
                 >
                   <option value="" disabled selected>Selecione sua atuação</option>
-                  <option v-for="it in fetched.atuacao" :value="it.id">{{ it.nome }}</option>
+                  <option v-for="it in fetchedAtuacao" :value="it.id">{{ it.nome }}</option>
                 </select>
               </div>
             </div>
@@ -100,26 +100,28 @@
         </template>
         <template v-slot:content>
           <div class="row" id="perguntaList">
-            <div class="col-md-12 mt-1" v-for="eixo in Object.keys(fetched.perguntas)"
+            <div class="col-md-12 mt-1" v-for="eixo in Object.keys(fetchedPerguntas)"
                  :key="Math.random()">
-              <p><small class="text-muted">{{ eixo }}</small></p>
-              <template v-for="dimensao in Object.keys(fetched.perguntas[eixo])">
-                <p style="margin-left: 1rem;"><small style="margin-top: 1rem;" class="text-muted">{{ dimensao }}</small>
+              <p v-if="eixo != 'Questão aberta'"><small class="text-muted">{{ eixo }}</small></p>
+              <template v-for="dimensao in Object.keys(fetchedPerguntas[eixo])">
+                <p v-if="dimensao != 'Resposta subjetiva'" style="margin-left: 1rem;"><small style="margin-top: 1rem;"
+                                                                                             class="text-muted">{{ dimensao
+                  }}</small>
                 </p>
-                <template v-for="pergunta in fetched.perguntas[eixo][dimensao]">
+                <template v-for="pergunta in fetchedPerguntas[eixo][dimensao]">
                   <div class="form-group" style="margin-left: 2rem;">
                     <p class="h3">
                       {{ pergunta.titulo }}
                       <span v-if="pergunta.tipo == 1"><b class="text-danger">*</b></span>
                     </p>
                     <div v-if="pergunta.tipo == 1" class="row" style="flex-direction: row;">
-                      <div v-for="obj in fetched.objetivas"
+                      <div v-for="obj in fetchedObjetivas"
                            class="form-check col-xs-4 col-sm-2 flex items-center">
                         <input class="form-check-input respostas" type="radio"
                                :name="`resposta-${pergunta.id}`"
                                :id="`resposta-${pergunta.id}-${obj.value}`"
                                :value="obj.id"
-                               v-bind:required="obj === fetched.objetivas[0]"
+                               v-bind:required="obj === fetchedObjetivas[0]"
                                v-model="answers[pergunta.id]">
                         <label class="form-check-label lead margin-0"
                                :for="`resposta-${pergunta.id}-${obj.value}`">
@@ -135,7 +137,7 @@
                               rows="3"></textarea>
                   </div>
                 </template>
-                <hr v-if="eixo !== Object.keys(fetched.perguntas).slice(-1).pop()">
+                <hr v-if="eixo !== Object.keys(fetchedPerguntas).slice(-1).pop()">
               </template>
             </div>
             <input class="btn btn-success btn-fill pull-right" style="margin-right: 1rem;" type="submit"
@@ -155,7 +157,7 @@ export default {
   name: "slug",
   head() {
     return {
-      title: `Questionário do ${this.fetched.segmento.nome} | IFG Comissão Própria de Avaliação`
+      title: `Questionário do ${this.fetchedSegmento.nome} | IFG Comissão Própria de Avaliação`
     };
   },
   components: {
@@ -166,7 +168,15 @@ export default {
       return this.$route.params.slug;
     }
   },
-  async asyncData({ $axios, route, redirect }) {
+  async asyncData({ env, $axios, route, redirect }) {
+    let startDate = new Date(env.QUEST_START_DATE);
+    let endDate = new Date(env.QUEST_END_DATE);
+    let now = new Date();
+
+    if (now > endDate || now < startDate) {
+      redirect(200, "/");
+    }
+
     let skey = route.params.slug;
     let res, campus;
 
@@ -183,12 +193,10 @@ export default {
     }
 
     return {
-      fetched: {
-        segmento,
-        perguntas,
-        campus,
-        objetivas: resp_objetivas
-      },
+      fetchedSegmento: segmento,
+      fetchedPerguntas: perguntas,
+      fetchedCampus: campus,
+      fetchedObjetivas: resp_objetivas,
       ano
     };
   },
@@ -196,12 +204,11 @@ export default {
     segmento_nome: "",
     ano: 0,
     colors: ["#fde3cc", "#fbfdcc", "#ccfcd6", "#ccfcec", "#ced3fb"],
-    fetched: {
-      campus: [],
-      cursos: [],
-      lotacao: [],
-      atuacao: []
-    },
+    fetchedCampus: [],
+    fetchedCursos: [],
+    fetchedLotacao: [],
+    fetchedAtuacao: [],
+    fetchedSegmento: {},
     curso: "",
     lotacao: "",
     campus: "",
@@ -209,23 +216,21 @@ export default {
     answers: {}
   }),
   methods: {
-    fetchCurso() {
-      this.$axios.get(`curso?campus=${this.campus}`).then(res => {
-        this.fetched.cursos = res.data.cursos;
-        this.curso = "";
-      });
+    async fetchCurso() {
+      const { cursos } = (await this.$axios.get(`curso?campus=${this.campus}`)).data;
+      this.fetchedCursos = cursos;
+      this.curso = "";
     },
-    fetchLotacao() {
-      this.$axios.get(`lotacao?campus=${this.campus}`).then(res => {
-        this.fetched.lotacao = res.data.lotacao;
-        this.lotacao = "";
-      });
+    async fetchLotacao() {
+      const { lotacao } = (await this.$axios.get(`lotacao?campus=${this.campus}`)).data;
+      this.fetchedLotacao = lotacao;
+      this.lotacao = "";
     },
-    fetchAtuacao() {
-      this.$axios.get(`atuacao?campus=${this.campus}`).then(res => {
-        this.fetched.atuacao = res.data.atuacao;
-        this.atuacao = "";
-      });
+    async fetchAtuacao() {
+      const { atuacao } = (await this.$axios.get(`atuacao?campus=${this.campus}`)).data;
+      this.fetchedAtuacao = atuacao;
+      this.atuacao = "";
+
     },
     changedCampus() {
       this.fetchCurso();
@@ -233,7 +238,7 @@ export default {
       this.fetchLotacao();
     },
     postForm($e) {
-      this.segmento = this.fetched.segmento.id;
+      this.segmento = this.fetchedSegmento.id;
       if (this.skey === "4jn7qduk") {
         this.campus = 15;
       }
@@ -241,7 +246,7 @@ export default {
         method: "post",
         url: "resposta",
         data: {
-          segmento: this.fetched.segmento.id,
+          segmento: this.fetchedSegmento.id,
           campus: this.campus,
           curso: this.curso,
           atuacao: this.atuacao,
