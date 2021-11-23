@@ -7,7 +7,7 @@
           <p>Prezado(a) participante, seja bem-vindo(a) ao QUESTIONÁRIO DE AUTOAVALIAÇÃO INSTITUCIONAL do
             IFG. Este questionário é anônimo e visa a obter avaliações referentes às atividades
             realizadas pelo IFG no ano de {{ ano }}. As questões abordam de forma concisa e objetiva os
-            eixos: Desenvolvimento Institucional, Políticas de Gestão e Infraestrutura. A sua opinião
+            eixos: 1 - Planejamento e avaliação institucional e 2 - Desenvolvimento institucional. A sua opinião
             subsidiará a
             elaboração do Relatório de Autoavaliação Institucional {{ ano }}, que será divulgado à comunidade
             acadêmica e norteará às tomadas de decisões da gestão para melhorias no IFG. </p>
