@@ -3,7 +3,7 @@
     <card>
       <template v-slot:content>
         <filterchart @change="updateChart" @normal="changeNormal" @total="changeTotal"
-                     @fetch="filterLoad = true" :anos="[2020, 2019]"></filterchart>
+                     @fetch="filterLoad = true" :anos="[2021, 2020, 2019]"></filterchart>
         <hr>
         <div v-if="filterLoad">
           <div v-if="queryChart.pergunta != 0 && indicatorChart" class="chart-options">
@@ -53,7 +53,7 @@ export default {
     indicatorChart: {},
     tableChart: [],
     part_pessoas: 0,
-    selectedAno: 2019
+    selectedAno: 2021
   }),
   methods: {
     changeNormal(val) {
